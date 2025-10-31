@@ -21,7 +21,7 @@ namespace BookFinder.API.Controllers
         public async Task<ActionResult<BookSearchResult>> SearchBooks(
             [FromQuery] string query,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 20)
+            [FromQuery] int pageSize = 12) // MUDAR DE 20 PARA 12
         {
             try
             {
@@ -92,7 +92,7 @@ namespace BookFinder.API.Controllers
         public async Task<ActionResult<BookSearchResult>> SearchByAuthor(
             [FromQuery] string author,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 20)
+            [FromQuery] int pageSize = 12) // MUDAR DE 20 PARA 12
         {
             try
             {
@@ -126,7 +126,7 @@ namespace BookFinder.API.Controllers
         public async Task<ActionResult<BookSearchResult>> SearchByCategory(
             [FromQuery] string category,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 20)
+            [FromQuery] int pageSize = 12) // MUDAR DE 20 PARA 12
         {
             try
             {

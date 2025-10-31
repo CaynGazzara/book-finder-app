@@ -7,11 +7,12 @@ import { Book, BookSearchResult } from '../models/book';
   providedIn: 'root'
 })
 export class BookService {
-  private apiUrl = '/api/books';
+  private apiUrl = 'https://localhost:7000/api/books';
 
   constructor(private http: HttpClient) { }
 
-  searchBooks(query: string, page: number = 1, pageSize: number = 20): Observable<BookSearchResult> {
+  // MUDAR pageSize padrão de 20 para 12
+  searchBooks(query: string, page: number = 1, pageSize: number = 12): Observable<BookSearchResult> {
     let params = new HttpParams()
       .set('query', query)
       .set('page', page.toString())
@@ -24,7 +25,8 @@ export class BookService {
     return this.http.get<Book>(`${this.apiUrl}/${id}`);
   }
 
-  searchByAuthor(author: string, page: number = 1, pageSize: number = 20): Observable<BookSearchResult> {
+  // MUDAR pageSize padrão de 20 para 12
+  searchByAuthor(author: string, page: number = 1, pageSize: number = 12): Observable<BookSearchResult> {
     let params = new HttpParams()
       .set('author', author)
       .set('page', page.toString())
@@ -33,7 +35,8 @@ export class BookService {
     return this.http.get<BookSearchResult>(`${this.apiUrl}/search/author`, { params });
   }
 
-  searchByCategory(category: string, page: number = 1, pageSize: number = 20): Observable<BookSearchResult> {
+  // MUDAR pageSize padrão de 20 para 12
+  searchByCategory(category: string, page: number = 1, pageSize: number = 12): Observable<BookSearchResult> {
     let params = new HttpParams()
       .set('category', category)
       .set('page', page.toString())

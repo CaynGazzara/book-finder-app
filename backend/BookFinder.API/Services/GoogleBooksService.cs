@@ -15,7 +15,7 @@ namespace BookFinder.API.Services
             _logger = logger;
         }
 
-        public async Task<BookSearchResult> SearchBooksAsync(string query, int page = 1, int pageSize = 20)
+        public async Task<BookSearchResult> SearchBooksAsync(string query, int page = 1, int pageSize = 12) // MUDAR DE 20 PARA 12
         {
             try
             {
@@ -23,7 +23,7 @@ namespace BookFinder.API.Services
                     throw new ArgumentException("Search query cannot be empty");
 
                 if (page < 1) page = 1;
-                if (pageSize < 1 || pageSize > 40) pageSize = 20;
+                if (pageSize < 1 || pageSize > 40) pageSize = 12; // MUDAR DE 20 PARA 12
 
                 var startIndex = (page - 1) * pageSize;
 
@@ -104,12 +104,12 @@ namespace BookFinder.API.Services
             }
         }
 
-        public async Task<BookSearchResult> SearchByAuthorAsync(string author, int page = 1, int pageSize = 20)
+        public async Task<BookSearchResult> SearchByAuthorAsync(string author, int page = 1, int pageSize = 12) // MUDAR DE 20 PARA 12
         {
             return await SearchBooksAsync($"inauthor:{author}", page, pageSize);
         }
 
-        public async Task<BookSearchResult> SearchByCategoryAsync(string category, int page = 1, int pageSize = 20)
+        public async Task<BookSearchResult> SearchByCategoryAsync(string category, int page = 1, int pageSize = 12) // MUDAR DE 20 PARA 12
         {
             return await SearchBooksAsync($"subject:{category}", page, pageSize);
         }

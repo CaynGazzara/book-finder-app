@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BookFinder.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ff380dca88b4f2d4f49f98f0c35796331d4beef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87715436e4c33d55e83a5c54ca9d02c8b3c68b19")]
 [assembly: System.Reflection.AssemblyProductAttribute("BookFinder.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BookFinder.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

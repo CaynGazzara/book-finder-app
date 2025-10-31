@@ -1,12 +1,12 @@
 <div class="book-details">
-  <button (click)="goBack()" class="back-button">← Voltar</button>
 
   <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
     <p>Carregando detalhes do livro...</p>
   </div>
 
-  <div *ngIf="error" class="error-container">
-    <h3>Erro</h3>
+  <div *ngIf="error && !loading" class="error-container">
+    <h3>😕 Erro ao carregar livro</h3>
     <p>{{ error }}</p>
     <button (click)="goBack()" class="back-button">Voltar para a lista</button>
   </div>
@@ -18,6 +18,7 @@
           [src]="book.thumbnail || 'assets/no-cover.png'" 
           [alt]="book.title"
           (error)="handleImageError($event)"
+          class="book-cover"
         />
       </div>
       
@@ -25,51 +26,53 @@
         <h1 class="book-title">{{ book.title }}</h1>
         
         <div class="book-authors">
-          <strong>Autores:</strong> 
-          {{ book.authors?.join(', ') || 'Autor desconhecido' }}
+          <strong>Autores:</strong> {{ getAuthorsString() }}
         </div>
 
         <div class="book-meta">
           <div class="meta-item" *ngIf="book.publishedDate">
-            <strong>Publicado:</strong> {{ book.publishedDate }}
+            <strong>📅 Publicado:</strong> {{ book.publishedDate }}
           </div>
           <div class="meta-item" *ngIf="book.publisher">
-            <strong>Editora:</strong> {{ book.publisher }}
+            <strong>🏢 Editora:</strong> {{ book.publisher }}
           </div>
           <div class="meta-item" *ngIf="book.pageCount">
-            <strong>Páginas:</strong> {{ book.pageCount }}
+            <strong>📖 Páginas:</strong> {{ book.pageCount }}
           </div>
           <div class="meta-item" *ngIf="book.categories && book.categories.length > 0">
-            <strong>Categorias:</strong> {{ book.categories.join(', ') }}
+            <strong>🏷️ Categorias:</strong> {{ getCategoriesString() }}
           </div>
         </div>
 
         <div class="book-rating" *ngIf="book.averageRating > 0">
           <div class="rating-stars">
-            ⭐⭐⭐⭐⭐
+            <span *ngFor="let star of [1,2,3,4,5]" 
+                  [class.filled]="star <= book.averageRating">
+              ⭐
+            </span>
           </div>
           <div class="rating-info">
-            {{ book.averageRating }} ({{ book.ratingsCount }} avaliações)
+            {{ book.averageRating | number:'1.1-1' }} ({{ book.ratingsCount }} avaliações)
           </div>
         </div>
 
         <div class="action-buttons">
           <button 
             (click)="openPreview()" 
-            [disabled]="!book.previewLink"
             class="preview-button"
+            [class.disabled]="!book.previewLink || book.previewLink === '#'"
           >
-            🔍 Visualizar Livro
+            🔍 {{ (book.previewLink && book.previewLink !== '#') ? 'Visualizar Livro' : 'Preview Indisponível' }}
           </button>
         </div>
       </div>
     </div>
 
-    <div class="book-description-section">
-      <h3>Descrição</h3>
-      <p class="book-description">
-        {{ book.description || 'Descrição não disponível para este livro.' }}
-      </p>
+    <div class="book-description-section" *ngIf="book.description">
+      <h3>📝 Descrição</h3>
+      <div class="book-description">
+        {{ book.description }}
+      </div>
     </div>
 
     <div class="book-actions">

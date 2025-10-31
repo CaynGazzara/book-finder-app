@@ -1,4 +1,5 @@
 <div class="book-list">
+    <app-search-bar (search)="onSearch($event)"></app-search-bar>
   <!-- Resultados -->
   <div *ngIf="searchResult" class="results-info">
     <p>Encontrados {{ searchResult.totalItems }} livros</p>

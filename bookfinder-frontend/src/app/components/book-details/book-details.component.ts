@@ -5,6 +5,7 @@ import { BookService } from '../../services/book.service';
 import { LoadingService } from '../../services/loading.service';
 
 @Component({
+  standalone: false,
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.css']
@@ -28,8 +29,10 @@ export class BookDetailsComponent implements OnInit {
   loadBookDetails(): void {
     const bookId = this.route.snapshot.paramMap.get('id');
     
+    console.log('Carregando detalhes do livro ID:', bookId);
+    
     if (!bookId) {
-      this.error = 'ID do livro não encontrado';
+      this.error = 'ID do livro não encontrado na URL';
       this.loading = false;
       return;
     }
@@ -39,13 +42,14 @@ export class BookDetailsComponent implements OnInit {
 
     this.bookService.getBookById(bookId).subscribe({
       next: (book) => {
+        console.log('Livro carregado:', book);
         this.book = book;
         this.loading = false;
         this.loadingService.hide();
       },
       error: (error) => {
         console.error('Erro ao carregar detalhes do livro:', error);
-        this.error = 'Erro ao carregar detalhes do livro';
+        this.error = 'Erro ao carregar detalhes do livro. Tente novamente.';
         this.loading = false;
         this.loadingService.hide();
       }
@@ -57,12 +61,24 @@ export class BookDetailsComponent implements OnInit {
   }
 
   openPreview(): void {
-    if (this.book?.previewLink) {
+    if (this.book?.previewLink && this.book.previewLink !== '#') {
       window.open(this.book.previewLink, '_blank');
+    } else {
+      alert('Preview não disponível para este livro.');
     }
   }
 
   handleImageError(event: any): void {
     event.target.src = 'assets/no-cover.png';
+  }
+
+  // Método para formatar a lista de autores
+  getAuthorsString(): string {
+    return this.book?.authors?.join(', ') || 'Autor desconhecido';
+  }
+
+  // Método para formatar categorias
+  getCategoriesString(): string {
+    return this.book?.categories?.join(', ') || 'Nenhuma categoria informada';
   }
 }

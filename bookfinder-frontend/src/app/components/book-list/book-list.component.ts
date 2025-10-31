@@ -5,6 +5,7 @@ import { BookService } from '../../services/book.service';
 import { LoadingService } from '../../services/loading.service';
 
 @Component({
+  standalone: false,
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
@@ -14,7 +15,8 @@ export class BookListComponent implements OnInit {
   searchResult: BookSearchResult | null = null;
   currentPage: number = 1;
   currentQuery: string = '';
-  currentPageSize: number = 20;
+  currentPageSize: number = 12; // MUDAR DE 20 PARA 12
+  currentSearchType: string = 'all';
   hasSearched: boolean = false;
 
   constructor(
@@ -29,9 +31,11 @@ export class BookListComponent implements OnInit {
   }
 
   onSearch(params: { query: string, type: string, pageSize: number }) {
+    console.log('Busca recebida:', params);
     this.currentQuery = params.query;
     this.currentPage = 1;
     this.currentPageSize = params.pageSize;
+    this.currentSearchType = params.type;
     this.hasSearched = true;
 
     this.performSearch(params.query, params.type, 1, params.pageSize);
@@ -55,6 +59,7 @@ export class BookListComponent implements OnInit {
 
     searchObservable.subscribe({
       next: (result) => {
+        console.log('Resultado da busca:', result);
         this.searchResult = result;
         this.books = result.items;
         this.currentPage = result.currentPage;
@@ -71,26 +76,34 @@ export class BookListComponent implements OnInit {
   nextPage() {
     if (this.searchResult?.hasNextPage) {
       this.currentPage++;
-      this.performSearch(this.currentQuery, 'all', this.currentPage, this.currentPageSize);
+      this.performSearch(this.currentQuery, this.currentSearchType, this.currentPage, this.currentPageSize);
     }
   }
 
   previousPage() {
     if (this.searchResult?.hasPreviousPage) {
       this.currentPage--;
-      this.performSearch(this.currentQuery, 'all', this.currentPage, this.currentPageSize);
+      this.performSearch(this.currentQuery, this.currentSearchType, this.currentPage, this.currentPageSize);
     }
   }
 
   viewBookDetails(bookId: string) {
-    this.router.navigate(['/book', bookId]);
+    console.log('Navegando para livro ID:', bookId);
+    
+    if (bookId && bookId.trim() !== '') {
+      this.router.navigate(['/book', bookId]);
+    } else {
+      console.error('ID do livro é inválido:', bookId);
+      alert('Erro: ID do livro não encontrado.');
+    }
   }
 
   handleImageError(event: any) {
     event.target.src = 'assets/no-cover.png';
   }
 
-  searchBooks(query: string) {
-    this.onSearch({ query: query, type: 'all', pageSize: 20 });
+  // Método interno para busca inicial
+  private searchBooks(query: string) {
+    this.onSearch({ query: query, type: 'all', pageSize: 12 }); // MUDAR DE 20 PARA 12
   }
 }

@@ -31,20 +31,16 @@ builder.Services.AddHttpClient<IBookService, GoogleBooksService>(client =>
     client.Timeout = TimeSpan.FromSeconds(30);
 });
 
-// Add CORS
+// CORS CONFIGURATION - PERMISSIVA PARA DESENVOLVIMENTO
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+              .AllowAnyMethod();
     });
 });
-
-// Add logging
-builder.Services.AddLogging();
 
 var app = builder.Build();
 
@@ -59,7 +55,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseCors("AllowAngular");
+// USE CORS - IMPORTANTE: Deve vir antes de UseAuthorization e MapControllers
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
