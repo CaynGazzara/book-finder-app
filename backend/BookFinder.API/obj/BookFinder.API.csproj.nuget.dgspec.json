@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\source\\Repos\\book-finder-app\\BookFinder.API\\BookFinder.API.csproj": {}
+    "C:\\Users\\USER\\source\\Repos\\book-finder-app\\backend\\BookFinder.API\\BookFinder.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\source\\Repos\\book-finder-app\\BookFinder.API\\BookFinder.API.csproj": {
+    "C:\\Users\\USER\\source\\Repos\\book-finder-app\\backend\\BookFinder.API\\BookFinder.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\source\\Repos\\book-finder-app\\BookFinder.API\\BookFinder.API.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\source\\Repos\\book-finder-app\\backend\\BookFinder.API\\BookFinder.API.csproj",
         "projectName": "BookFinder.API",
-        "projectPath": "C:\\Users\\USER\\source\\Repos\\book-finder-app\\BookFinder.API\\BookFinder.API.csproj",
+        "projectPath": "C:\\Users\\USER\\source\\Repos\\book-finder-app\\backend\\BookFinder.API\\BookFinder.API.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\source\\Repos\\book-finder-app\\BookFinder.API\\obj\\",
+        "outputPath": "C:\\Users\\USER\\source\\Repos\\book-finder-app\\backend\\BookFinder.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -53,7 +53,7 @@
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[9.0.8, )"
+              "version": "[9.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -64,6 +64,10 @@
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[9.0.10, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.6, )"
             },
             "System.Text.Json": {
               "target": "Package",
