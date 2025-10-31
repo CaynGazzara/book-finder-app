@@ -1,0 +1,34 @@
+<div class="search-bar">
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (keyup.enter)="onSearch()"
+      placeholder="Digite o título, autor ou assunto do livro..."
+      class="search-input"
+    />
+    <button (click)="onSearch()" class="search-button">
+      🔍 Buscar
+    </button>
+  </div>
+  
+  <div class="search-options" *ngIf="showAdvanced">
+    <select [(ngModel)]="searchType" class="search-select">
+      <option value="all">Todos</option>
+      <option value="author">Autor</option>
+      <option value="category">Categoria</option>
+    </select>
+    <input
+      type="number"
+      [(ngModel)]="pageSize"
+      min="5"
+      max="40"
+      class="page-size-input"
+      placeholder="Itens por página"
+    />
+  </div>
+
+  <button (click)="toggleAdvanced()" class="advanced-toggle">
+    {{ showAdvanced ? 'Ocultar' : 'Avançado' }} ›
+  </button>
+</div>

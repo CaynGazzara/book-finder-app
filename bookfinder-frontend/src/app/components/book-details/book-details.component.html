@@ -1,0 +1,79 @@
+<div class="book-details">
+  <button (click)="goBack()" class="back-button">← Voltar</button>
+
+  <div *ngIf="loading" class="loading-container">
+    <p>Carregando detalhes do livro...</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <h3>Erro</h3>
+    <p>{{ error }}</p>
+    <button (click)="goBack()" class="back-button">Voltar para a lista</button>
+  </div>
+
+  <div *ngIf="book && !loading" class="book-details-content">
+    <div class="book-header">
+      <div class="book-image">
+        <img 
+          [src]="book.thumbnail || 'assets/no-cover.png'" 
+          [alt]="book.title"
+          (error)="handleImageError($event)"
+        />
+      </div>
+      
+      <div class="book-main-info">
+        <h1 class="book-title">{{ book.title }}</h1>
+        
+        <div class="book-authors">
+          <strong>Autores:</strong> 
+          {{ book.authors?.join(', ') || 'Autor desconhecido' }}
+        </div>
+
+        <div class="book-meta">
+          <div class="meta-item" *ngIf="book.publishedDate">
+            <strong>Publicado:</strong> {{ book.publishedDate }}
+          </div>
+          <div class="meta-item" *ngIf="book.publisher">
+            <strong>Editora:</strong> {{ book.publisher }}
+          </div>
+          <div class="meta-item" *ngIf="book.pageCount">
+            <strong>Páginas:</strong> {{ book.pageCount }}
+          </div>
+          <div class="meta-item" *ngIf="book.categories && book.categories.length > 0">
+            <strong>Categorias:</strong> {{ book.categories.join(', ') }}
+          </div>
+        </div>
+
+        <div class="book-rating" *ngIf="book.averageRating > 0">
+          <div class="rating-stars">
+            ⭐⭐⭐⭐⭐
+          </div>
+          <div class="rating-info">
+            {{ book.averageRating }} ({{ book.ratingsCount }} avaliações)
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button 
+            (click)="openPreview()" 
+            [disabled]="!book.previewLink"
+            class="preview-button"
+          >
+            🔍 Visualizar Livro
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="book-description-section">
+      <h3>Descrição</h3>
+      <p class="book-description">
+        {{ book.description || 'Descrição não disponível para este livro.' }}
+      </p>
+    </div>
+
+    <div class="book-actions">
+      <button (click)="goBack()" class="back-button">← Voltar para a lista</button>
+    </div>
+  </div>
+</div>

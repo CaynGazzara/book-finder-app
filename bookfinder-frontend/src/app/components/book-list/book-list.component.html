@@ -1,0 +1,88 @@
+<div class="book-list">
+  <!-- Resultados -->
+  <div *ngIf="searchResult" class="results-info">
+    <p>Encontrados {{ searchResult.totalItems }} livros</p>
+    <div *ngIf="searchResult.totalItems > 0" class="pagination-info">
+      Página {{ searchResult.currentPage }} de {{ searchResult.totalPages }}
+    </div>
+  </div>
+
+  <!-- Grid de Livros -->
+  <div class="books-grid" *ngIf="books.length > 0; else noResults">
+    <div 
+      *ngFor="let book of books" 
+      class="book-card"
+      (click)="viewBookDetails(book.id)"
+    >
+      <div class="book-image">
+        <img 
+          [src]="book.thumbnail || 'assets/no-cover.png'" 
+          [alt]="book.title"
+          (error)="handleImageError($event)"
+        />
+      </div>
+      <div class="book-info">
+        <h3 class="book-title">{{ book.title }}</h3>
+        <p class="book-authors">
+          Por: {{ book.authors?.join(', ') || 'Autor desconhecido' }}
+        </p>
+        <p class="book-published">
+          Publicado: {{ book.publishedDate || 'Data desconhecida' }}
+        </p>
+        <div class="book-rating" *ngIf="book.averageRating > 0">
+          ⭐ {{ book.averageRating }} ({{ book.ratingsCount }} avaliações)
+        </div>
+        <p class="book-description">
+          {{ (book.description || 'Descrição não disponível') | truncate:150 }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginação -->
+  <div *ngIf="searchResult && searchResult.totalItems > 0" class="pagination">
+    <button 
+      (click)="previousPage()" 
+      [disabled]="!searchResult.hasPreviousPage"
+      class="pagination-button"
+    >
+      ‹ Anterior
+    </button>
+    
+    <span class="pagination-text">
+      Página {{ currentPage }} de {{ searchResult.totalPages }}
+    </span>
+    
+    <button 
+      (click)="nextPage()" 
+      [disabled]="!searchResult.hasNextPage"
+      class="pagination-button"
+    >
+      Próxima ›
+    </button>
+  </div>
+
+  <!-- Estados vazios -->
+  <ng-template #noResults>
+    <div class="empty-state">
+      <div *ngIf="hasSearched; else initialState">
+        <h3>Nenhum livro encontrado</h3>
+        <p>Tente ajustar os termos da sua busca.</p>
+      </div>
+      <ng-template #initialState>
+        <div class="welcome-message">
+          <h3>Bem-vindo ao BookFinder! 📚</h3>
+          <p>Use a barra de busca acima para encontrar seus livros favoritos.</p>
+          <div class="search-tips">
+            <h4>Dicas de busca:</h4>
+            <ul>
+              <li>Use o nome do livro, autor ou assunto</li>
+              <li>Experimente buscar por "Harry Potter", "Stephen King", etc.</li>
+              <li>Use a busca avançada para filtrar por autor ou categoria</li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>
